@@ -1,0 +1,22 @@
+dashboard = ->blocs
+            ->dashboard
+            ->repositories
+            ->dashboardservices(return response[data])
+            ->dashboardbloc(membuat list dari return dashboardservices & mengirim return ke dashboardstate)
+            ->dashboardstate(membuat variabel list kosong yang akan diisi dari dashboardstate)
+            ->home(memanggil class dashboardstate)
+            ->home(memanggil class kelasitemsaya dengan mengirim parameter berupa list yang ingin ditampilkan)
+            ->kelas_saya_item(membuat isi dari parameter yang dikirimkan)   
+
+
+add dev dependencies
+change_app_package_name: ^1.1.0
+
+pubspec.yaml change name
+
+flutter pub get
+
+flutter pub run change_app_package_name:main com.agsatu.onboardingmain
+flutter pub get
+
+pub global run rename --bundleId com.agsatu.onboardingmain
