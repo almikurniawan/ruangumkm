@@ -5,6 +5,7 @@ class Tugas {
   String? slug2;
   String? createdAt;
   int? status;
+  int? flag;
 
   Tugas(
       {this.id,
@@ -12,7 +13,8 @@ class Tugas {
       this.slug,
       this.slug2,
       this.createdAt,
-      this.status});
+      this.status,
+      this.flag});
 
   Tugas.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -21,6 +23,7 @@ class Tugas {
     slug2 = json['slug2'];
     createdAt = json['created_at'];
     status = json['status'];
+    flag = json['flag'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +34,7 @@ class Tugas {
     data['slug2'] = this.slug2;
     data['created_at'] = this.createdAt;
     data['status'] = this.status;
+    data['flag'] = this.flag;
     return data;
   }
 }

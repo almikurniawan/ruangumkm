@@ -11,7 +11,11 @@ import 'package:online_course/blocs/peringkat/peringkat_state.dart';
 import 'package:online_course/blocs/tugas/tugas_bloc.dart';
 import 'package:online_course/blocs/tugas/tugas_event.dart';
 import 'package:online_course/blocs/tugas/tugas_state.dart';
+import 'package:online_course/blocs/tugas_submit/tugas_submit_bloc.dart';
+import 'package:online_course/blocs/tugas_submit/tugas_submit_event.dart';
+import 'package:online_course/blocs/tugas_submit/tugas_submit_state.dart';
 import 'package:online_course/screens/tugas_page.dart';
+import 'package:online_course/screens/tugas_sunting_page.dart';
 import 'package:online_course/theme/color.dart';
 import 'package:online_course/widgets/contant.dart';
 import 'package:online_course/widgets/header_kelas_detail.dart';
@@ -320,7 +324,6 @@ class _KelasDetailState extends State<KelasDetail> {
   }
 
   Widget buildTugas() {
-
     return BlocBuilder<TugasBloc, TugasState>(
       builder: (context, state) {
         if (state is TugasLoadedState) {
@@ -333,11 +336,36 @@ class _KelasDetailState extends State<KelasDetail> {
                         width: 10,
                       ),
                       Expanded(child: Text(e.judul!)),
-                      IconButton(onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return TugasPage(slug: e.slug!, idSub: e.id!, idFasilitator: idFasilitator,);
-                        },));
-                      }, icon: Icon(Icons.edit))
+                      IconButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                if (e.flag == 1) {
+                                  return TugasPage(
+                                    slug: e.slug!,
+                                    idSub: e.id!,
+                                    idFasilitator: idFasilitator,
+                                    slug2: e.slug2!,
+                                  );
+                                } else if (e.flag == 2) {
+                                  return TugasSuntingPage(
+                                    slug: e.slug!,
+                                    idSub: e.id!,
+                                    idFasilitator: idFasilitator,
+                                    slug2: e.slug2!,
+                                  );
+                                }else{
+                                  return TugasSuntingPage(
+                                    slug: e.slug!,
+                                    idSub: e.id!,
+                                    idFasilitator: idFasilitator,
+                                    slug2: e.slug2!,
+                                  );
+                                }
+                              },
+                            ));
+                          },
+                          icon: Icon(Icons.edit))
                     ],
                   )))
               .toList();
@@ -372,10 +400,11 @@ class _KelasDetailState extends State<KelasDetail> {
                     nomor.toString() + ". " + e.name!,
                   ),
                 ),
-                Text(e.penilaian??"-",
-                    style: Theme.of(context).textTheme.bodyText1!.merge(TextStyle(
-                      fontSize: 14
-                    ))),
+                Text(e.penilaian ?? "-",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .merge(TextStyle(fontSize: 14))),
               ],
             ));
           }).toList();
@@ -485,75 +514,82 @@ class _KelasDetailState extends State<KelasDetail> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 5,
-      child: Scaffold(
-          body: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            SliverPersistentHeader(
-                delegate: DelegateHeader(child: buildHeader())),
-            SliverOverlapAbsorber(
-                handle:
-                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                sliver: SliverPersistentHeader(
-                    pinned: true,
-                    floating: true,
-                    delegate: Delegate(
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 5))
-                              ],
+    return BlocListener<TugasSubmitBloc, TugasSubmitState>(
+      listener: (context, state) {
+        if (state is TugasSubmitFinishState) {
+          _tugasBloc.add(TugasLoadEvent(slug: widget.slug));
+        }
+      },
+      child: DefaultTabController(
+        length: 5,
+        child: Scaffold(
+            body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return [
+              SliverPersistentHeader(
+                  delegate: DelegateHeader(child: buildHeader())),
+              SliverOverlapAbsorber(
+                  handle:
+                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                  sliver: SliverPersistentHeader(
+                      pinned: true,
+                      floating: true,
+                      delegate: Delegate(
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 5,
+                                      offset: Offset(0, 5))
+                                ],
+                              ),
+                              child: TabBar(
+                                isScrollable: true,
+                                tabs: [
+                                  "Ringkasan",
+                                  "Materi",
+                                  "Tugas",
+                                  "Peringkat",
+                                  "Profil Fasilitator"
+                                ].map((String name) {
+                                  return Tab(
+                                    text: name,
+                                  );
+                                }).toList(),
+                              ),
                             ),
-                            child: TabBar(
-                              isScrollable: true,
-                              tabs: [
-                                "Ringkasan",
-                                "Materi",
-                                "Tugas",
-                                "Peringkat",
-                                "Profil Fasilitator"
-                              ].map((String name) {
-                                return Tab(
-                                  text: name,
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ))),
-          ];
-        },
-        body: TabBarView(
-          children: [
-            ContainerTabView(
-                child: SliverToBoxAdapter(child: buildRingkasan()),
-                indexKey: 1),
-            ContainerTabView(
-              indexKey: 2,
-              child: SliverToBoxAdapter(child: buildMateri()),
-            ),
-            ContainerTabView(
-                child: SliverToBoxAdapter(child: buildTugas()), indexKey: 3),
-            ContainerTabView(
-                child: SliverToBoxAdapter(child: buildPeringkat()),
-                indexKey: 4),
-            ContainerTabView(
-                child: SliverToBoxAdapter(child: buildFasilitator()),
-                indexKey: 5),
-          ],
-        ),
-      )),
+                          ],
+                        ),
+                      ))),
+            ];
+          },
+          body: TabBarView(
+            children: [
+              ContainerTabView(
+                  child: SliverToBoxAdapter(child: buildRingkasan()),
+                  indexKey: 1),
+              ContainerTabView(
+                indexKey: 2,
+                child: SliverToBoxAdapter(child: buildMateri()),
+              ),
+              ContainerTabView(
+                  child: SliverToBoxAdapter(child: buildTugas()), indexKey: 3),
+              ContainerTabView(
+                  child: SliverToBoxAdapter(child: buildPeringkat()),
+                  indexKey: 4),
+              ContainerTabView(
+                  child: SliverToBoxAdapter(child: buildFasilitator()),
+                  indexKey: 5),
+            ],
+          ),
+        )),
+      ),
     );
   }
 }

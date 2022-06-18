@@ -10,12 +10,12 @@ import 'package:online_course/blocs/tugas_submit/tugas_submit_event.dart';
 import 'package:online_course/blocs/tugas_submit/tugas_submit_state.dart';
 import 'package:online_course/theme/color.dart';
 
-class TugasPage extends StatefulWidget {
+class TugasSuntingPage extends StatefulWidget {
   final String slug;
   final String slug2;
   final int idSub;
   final int idFasilitator;
-  const TugasPage(
+  const TugasSuntingPage(
       {Key? key,
       required this.slug,
       required this.slug2,
@@ -24,13 +24,15 @@ class TugasPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<TugasPage> createState() => _TugasPageState();
+  State<TugasSuntingPage> createState() => _TugasSuntingPageState();
 }
 
-class _TugasPageState extends State<TugasPage> {
+class _TugasSuntingPageState extends State<TugasSuntingPage> {
   late KomentarBloc _komentarBloc;
   late TugasSubmitBloc _tugasSubmitBloc;
   TextEditingController komentarController = TextEditingController();
+
+  List<TextEditingController> _controller = [];
 
   @override
   void initState() {
@@ -40,10 +42,10 @@ class _TugasPageState extends State<TugasPage> {
     _tugasSubmitBloc = BlocProvider.of<TugasSubmitBloc>(context);
     _komentarBloc.add(KomentarLoadEvent(slug: widget.slug));
     _tugasSubmitBloc
-        .add(TugasSubmitLoadEvent(slug1: widget.slug, slug2: widget.slug2));
-    Timer.periodic(Duration(seconds: 15), (timer) {
-      _komentarBloc.add(KomentarLoadEvent(slug: widget.slug));
-    });
+        .add(TugasSubmitLoadSuntingEvent(slug1: widget.slug, slug2: widget.slug2));
+    // Timer.periodic(Duration(seconds: 15), (timer) {
+    //   _komentarBloc.add(KomentarLoadEvent(slug: widget.slug));
+    // });
   }
 
   @override
@@ -67,7 +69,10 @@ class _TugasPageState extends State<TugasPage> {
                       color: Colors.black),
                 );
               }
-              return Text("Tugas");
+              return Text("Sunting Tugas", style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black));
             },
           ),
         ),
@@ -113,6 +118,8 @@ class _TugasPageState extends State<TugasPage> {
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   Widget soal = Text("soal");
+                                  // _controller.add(TextEditingController());
+                                  // _controller[index].text = state.jawabanPeserta![index];
                                   if (state.soal![index].value == "text") {
                                     soal = Container(
                                       child: Column(
@@ -129,12 +136,7 @@ class _TugasPageState extends State<TugasPage> {
                                               height: 10,
                                             ),
                                             TextField(
-                                              onChanged: (value) {
-                                                _tugasSubmitBloc.add(
-                                                    TugasSubmitChangeJawabanevent(
-                                                        index: index,
-                                                        jawaban: value));
-                                              },
+                                              controller: state.jawabanController![index],
                                             ),
                                             SizedBox(
                                               height: 10,
@@ -187,7 +189,7 @@ class _TugasPageState extends State<TugasPage> {
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(primary: primary),
                       onPressed: () {
-                        _tugasSubmitBloc.add(TugasSubmitFinishEvent());
+                        _tugasSubmitBloc.add(TugasSubmitFinishSuntingEvent());
                       },
                       child: Text("Selesai")),
                 ),

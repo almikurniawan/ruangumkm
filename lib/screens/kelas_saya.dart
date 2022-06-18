@@ -75,7 +75,7 @@ class Kelas extends StatefulWidget {
 
 class _KelasState extends State<Kelas> {
   late KelasBloc _kelasBloc;
-  
+
   late LoginBloc loginBloc;
 
   @override
@@ -201,6 +201,9 @@ class _KelasState extends State<Kelas> {
               removeTop: true,
               child:
                   BlocBuilder<KelasBloc, KelasState>(builder: (context, state) {
+                if (state is KelasErrorState) {
+                  loginBloc.add(Logout());
+                }
                 if (state is KelasStateLoad) {
                   int jumlah = 5;
                   KelasStateLoad curState = state as KelasStateLoad;
@@ -258,8 +261,7 @@ class _KelasState extends State<Kelas> {
                           return LoadingCard();
                         }
                       });
-                }else{
-                  loginBloc.add(Logout());
+                } else {
                   return Unauthenticated();
                 }
               }),

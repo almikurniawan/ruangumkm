@@ -35,8 +35,10 @@ class KelasService{
           'search': event.search
         },
       );
+      print(response.data);
       return response.data['response'];
-    } catch (e) {
+    } on DioError catch (e) {
+      print(e.response);
       return {'errorCode': 1, 'errorMessage': 'Terjadi Kesalahan'};
     }
   }

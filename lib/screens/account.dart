@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_course/blocs/login/login_bloc.dart';
 import 'package:online_course/blocs/login/login_event.dart';
 import 'package:online_course/blocs/login/login_state.dart';
+import 'package:online_course/blocs/profile/profile_bloc.dart';
+import 'package:online_course/blocs/profile/profile_state.dart';
 import 'package:online_course/screens/login.dart';
 import 'package:online_course/screens/profile.dart';
 import 'package:online_course/theme/color.dart';
@@ -13,7 +15,7 @@ import 'package:online_course/widgets/setting_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountPage extends StatefulWidget {
-  const AccountPage({ Key? key }) : super(key: key);
+  const AccountPage({Key? key}) : super(key: key);
 
   @override
   State<AccountPage> createState() => _AccountPageState();
@@ -114,22 +116,29 @@ class _AkunBodyState extends State<AkunBody> {
       padding: EdgeInsets.only(left: 15, right: 15),
       child: Column(
         children: [
-          Column(
-            children: [
-              CustomImage(
-                profile["image"]!,
-                width: 70,
-                height: 70,
-                radius: 20,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                profile["name"]!,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-              ),
-            ],
+          BlocBuilder<ProfileBloc, ProfileState>(
+            builder: (context, state) {
+              return Column(
+                children: [
+                  CustomImage(
+                    (state is ProfileLoadedState)
+                        ? "https://ruangumkm.ilmanaf.com/public/img/anggota/"+state.profile.foto!
+                        : "https://ruangumkm.ilmanaf.com/public/img/anggota/1650419288-anggota.png",
+                    width: 70,
+                    height: 70,
+                    radius: 20,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    (state is ProfileLoadedState)
+                        ? state.profile.name! : "",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              );
+            },
           ),
           SizedBox(
             height: 20,

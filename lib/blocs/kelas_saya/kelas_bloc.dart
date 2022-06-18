@@ -27,7 +27,7 @@ class KelasBloc extends Bloc<KelasEvent, KelasState> {
         emit(currentState);
         Map<String, dynamic> data = await KelasService().loadKelas(event);
         if (data.containsKey('errorCode')) {
-          emit(KelasErrorState(data['errorCode'], data['errorMessage']));
+          // emit(KelasErrorState(data['errorCode'], data['errorMessage']));
         } else {
           List<KelasSayaModel> _kelas = List.from(data['items']['data'])
               .map((item) => KelasSayaModel.fromJson(item))

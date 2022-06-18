@@ -11,9 +11,12 @@ import 'package:online_course/blocs/komentar/komentar_bloc.dart';
 import 'package:online_course/blocs/login/login_bloc.dart';
 import 'package:online_course/blocs/login/login_state.dart';
 import 'package:online_course/blocs/peringkat/peringkat_bloc.dart';
+import 'package:online_course/blocs/profile/profile_bloc.dart';
 import 'package:online_course/blocs/register/register_bloc.dart';
 import 'package:online_course/blocs/register/register_state.dart';
 import 'package:online_course/blocs/tugas/tugas_bloc.dart';
+import 'package:online_course/blocs/tugas_submit/tugas_submit_bloc.dart';
+import 'package:online_course/blocs/tugas_submit/tugas_submit_event.dart';
 import 'package:online_course/screens/splash_screen.dart';
 import 'theme/color.dart';
 
@@ -57,6 +60,12 @@ class MyApp extends StatelessWidget {
         }),
         BlocProvider(create: (BuildContext context) {
           return KomentarBloc();
+        }),
+        BlocProvider(create: (BuildContext context) {
+          return TugasSubmitBloc();
+        }),
+        BlocProvider(create: (BuildContext context) {
+          return ProfileBloc();
         }),
       ],
       child: MaterialApp(
