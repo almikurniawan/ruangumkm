@@ -6,10 +6,15 @@ import 'package:online_course/repositories/profile_service.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(ProfileInitial()){
-    on<ProileLoadEvent>((event, emit) async{
+    on<ProfileLoadEvent>((event, emit) async{
+      emit(ProfileInitial());
       Map<String, dynamic> profile = await ProfileService().loadProfile();
-      print(profile);
       emit(ProfileLoadedState(ProfileModel.fromJson(profile)));
+    });
+
+    on<ProfileUpdateEvent>((event, emit) async{
+      Map<String, dynamic> res = await ProfileService().update(event);
+      print(res);
     });
   }
   

@@ -70,4 +70,18 @@ class TugasService {
       return {'errorCode': 1, 'errorMessage': 'Unauthenticated'};
     }
   }
+
+  Future<Map<String, dynamic>> loadReview(TugasSubmitLoadReviewEvent event) async{
+    try {
+      String token = await getToken();
+      Response response = await dio.get(
+          baseUrl + "/api/review-tugas/" + event.slug1 + '/' + event.slug2,
+          options: Options(headers: {"Authorization": "Bearer " + token}));
+      return response.data['response'];
+    } catch (e) {
+      return {'errorCode': 1, 'errorMessage': 'Unauthenticated'};
+    }
+
+    return {};
+  }
 }

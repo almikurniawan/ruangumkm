@@ -24,3 +24,9 @@ class TugasSubmitLoadSuntingEvent extends TugasSubmitEvent {
   final String slug2;
   TugasSubmitLoadSuntingEvent({required this.slug1, required this.slug2});
 }
+
+class TugasSubmitLoadReviewEvent extends TugasSubmitEvent{
+  final String slug1;
+  final String slug2;
+  TugasSubmitLoadReviewEvent({required this.slug1, required this.slug2});
+}

@@ -122,5 +122,34 @@ class TugasSubmitBloc extends Bloc<TugasSubmitEvent, TugasSubmitState> {
             jawabanController: controller));
       }
     });
+
+    on<TugasSubmitLoadReviewEvent>((event, emit) async{
+      emit(TugasSubmitLoadingState());
+      Map<String, dynamic> data = await TugasService().loadReview(event);
+      print(data);
+
+      List<Soal> soals = List.from(data['soal'])
+          .map<Soal>((item) => Soal.fromJson(item))
+          .toList();
+
+      List<String> jawabanPeserta = data['jawaban'].map<String>((e) {
+        return e.toString();
+      }).toList();
+
+      List<TextEditingController> controller = data['jawaban'].map<TextEditingController>((e) {
+        return TextEditingController(text: e.toString());
+      }).toList();
+
+      if (data.containsKey("errorCode")) {
+      } else {
+        emit(TugasSubmitLoadedState(
+            idEvent: data['id_event'],
+            soal: soals,
+            jawaban: [],
+            judulTugas: data['judul_tugas'],
+            jawabanPeserta: jawabanPeserta,
+            jawabanController: controller));
+      }
+    });
   }
 }

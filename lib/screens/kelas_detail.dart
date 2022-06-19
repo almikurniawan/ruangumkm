@@ -15,6 +15,7 @@ import 'package:online_course/blocs/tugas_submit/tugas_submit_bloc.dart';
 import 'package:online_course/blocs/tugas_submit/tugas_submit_event.dart';
 import 'package:online_course/blocs/tugas_submit/tugas_submit_state.dart';
 import 'package:online_course/screens/tugas_page.dart';
+import 'package:online_course/screens/tugas_review.dart';
 import 'package:online_course/screens/tugas_sunting_page.dart';
 import 'package:online_course/theme/color.dart';
 import 'package:online_course/widgets/contant.dart';
@@ -355,7 +356,7 @@ class _KelasDetailState extends State<KelasDetail> {
                                     slug2: e.slug2!,
                                   );
                                 }else{
-                                  return TugasSuntingPage(
+                                  return TugasReview(
                                     slug: e.slug!,
                                     idSub: e.id!,
                                     idFasilitator: idFasilitator,

@@ -6,7 +6,6 @@ class ProfileInitial extends ProfileState {}
 
 class ProfileLoadedState extends ProfileState {
   final ProfileModel profile;
-
   ProfileLoadedState(this.profile);
 }
 

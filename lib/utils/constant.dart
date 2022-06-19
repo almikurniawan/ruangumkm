@@ -11,8 +11,8 @@ Future<String> getToken() async{
 
 Future<int> getIdUser() async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  int? idUser = await prefs.getInt('id_user');
-  return idUser!;
+  int idUser = await prefs.getInt('id_user') ?? 0;
+  return idUser;
 }
 
 Future<String> getUser() async{

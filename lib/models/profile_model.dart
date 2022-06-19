@@ -3,7 +3,7 @@ class ProfileModel {
   String? name;
   String? email;
   String? username;
-  Null? rememberToken;
+  String? rememberToken;
   String? level;
   String? foto;
   String? status;
@@ -11,7 +11,6 @@ class ProfileModel {
   String? updatedAt;
   String? limitName;
   int? jumlahSertifikat;
-  List<Null>? kelasUser;
   ProfilPeserta? profilPeserta;
 
   ProfileModel(
@@ -27,7 +26,6 @@ class ProfileModel {
       this.updatedAt,
       this.limitName,
       this.jumlahSertifikat,
-      this.kelasUser,
       this.profilPeserta});
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -76,11 +74,11 @@ class ProfilPeserta {
   String? usaha;
   String? alamat;
   String? noHp;
-  Null? instagram;
-  Null? facebook;
-  Null? tokopedia;
-  Null? shopee;
-  Null? website;
+  String? instagram;
+  String? facebook;
+  String? tokopedia;
+  String? shopee;
+  String? website;
 
   ProfilPeserta(
       {this.id,
