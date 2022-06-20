@@ -4,7 +4,6 @@ import 'package:online_course/blocs/login/login_bloc.dart';
 import 'package:online_course/blocs/login/login_event.dart';
 import 'package:online_course/screens/register.dart';
 import 'package:online_course/theme/animation.dart';
-import 'package:online_course/theme/color.dart';
 import 'package:online_course/widgets/contant.dart';
 
 class Login extends StatefulWidget {

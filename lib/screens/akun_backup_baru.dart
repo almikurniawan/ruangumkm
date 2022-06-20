@@ -4,7 +4,8 @@ import 'package:online_course/blocs/login/login_bloc.dart';
 import 'package:online_course/blocs/login/login_event.dart';
 import 'package:online_course/blocs/login/login_state.dart';
 import 'package:online_course/screens/login.dart';
-import 'package:online_course/screens/pengaturan.dart';
+import 'package:online_course/screens/profile.dart';
+import 'package:online_course/screens/sertifikat.dart';
 import 'package:online_course/theme/color.dart';
 import 'package:online_course/utils/data.dart';
 import 'package:online_course/widgets/custom_image.dart';
@@ -32,7 +33,6 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    //
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         setState(() {});
@@ -71,7 +71,6 @@ class _AkunBodyState extends State<AkunBody> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loginBloc = BlocProvider.of<LoginBloc>(context);
     print(loginBloc);
@@ -148,14 +147,6 @@ class _AkunBodyState extends State<AkunBody> {
                 SizedBox(
                   width: 10,
                 ),
-                // Expanded(
-                //     child: SettingBox(
-                //   title: "55 hours",
-                //   icon: "assets/icons/time.svg",
-                // ),),
-                // SizedBox(
-                //   width: 10,
-                // ),
                 Expanded(
                   child: SettingBox(
                     title: "2 Sertifikat",
@@ -190,7 +181,11 @@ class _AkunBodyState extends State<AkunBody> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Pengaturan()),
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Profile();
+                      },
+                    ),
                   );
                 },
               ),
@@ -201,12 +196,6 @@ class _AkunBodyState extends State<AkunBody> {
                   color: Colors.grey.withOpacity(0.8),
                 ),
               ),
-              // SettingItem(
-              //   title: "Payment",
-              //   leadingIcon: "assets/icons/wallet.svg",
-              //   bgIconColor: green,
-              //   onTap: () {},
-              // ),
               Padding(
                 padding: const EdgeInsets.only(left: 45),
                 child: Divider(
@@ -217,50 +206,20 @@ class _AkunBodyState extends State<AkunBody> {
               SettingItem(
                 title: "Sertifikat",
                 leadingIcon: "assets/icons/star.svg",
-                bgIconColor: yellow,
-                onTap: () {},
+                bgIconColor: primary,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Sertifikat();
+                      },
+                    ),
+                  );
+                },
               ),
             ]),
           ),
-          // SizedBox(
-          //   height: 20,
-          // ),
-          // Container(
-          //   padding: const EdgeInsets.only(left: 15, right: 15),
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(5),
-          //     color: cardColor,
-          //     boxShadow: [
-          //       BoxShadow(
-          //         color: shadowColor.withOpacity(0.1),
-          //         spreadRadius: 1,
-          //         blurRadius: 1,
-          //         offset: Offset(0, 1), // changes position of shadow
-          //       ),
-          //     ],
-          //   ),
-          //   child: Column(children: [
-          //     SettingItem(
-          //       title: "Notification",
-          //       leadingIcon: "assets/icons/bell.svg",
-          //       bgIconColor: purple,
-          //       onTap: () {},
-          //     ),
-          //     Padding(
-          //       padding: const EdgeInsets.only(left: 45),
-          //       child: Divider(
-          //         height: 0,
-          //         color: Colors.grey.withOpacity(0.8),
-          //       ),
-          //     ),
-          //     SettingItem(
-          //       title: "Privacy",
-          //       leadingIcon: "assets/icons/shield.svg",
-          //       bgIconColor: orange,
-          //       onTap: () {},
-          //     ),
-          //   ]),
-          // ),
           SizedBox(
             height: 20,
           ),
