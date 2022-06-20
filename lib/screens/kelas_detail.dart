@@ -14,6 +14,7 @@ import 'package:online_course/blocs/tugas/tugas_state.dart';
 import 'package:online_course/blocs/tugas_submit/tugas_submit_bloc.dart';
 import 'package:online_course/blocs/tugas_submit/tugas_submit_event.dart';
 import 'package:online_course/blocs/tugas_submit/tugas_submit_state.dart';
+import 'package:online_course/screens/baca_materi.dart';
 import 'package:online_course/screens/tugas_page.dart';
 import 'package:online_course/screens/tugas_review.dart';
 import 'package:online_course/screens/tugas_sunting_page.dart';
@@ -26,6 +27,7 @@ import 'package:online_course/widgets/loading_header.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:online_course/widgets/unauthenticated.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class KelasDetail extends StatefulWidget {
   final String slug;
@@ -294,6 +296,16 @@ class _KelasDetailState extends State<KelasDetail> {
     });
   }
 
+  Future<Map<String, dynamic>> checkAuth() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (await prefs.containsKey('token')) {
+      String? token = await prefs.getString('token');
+      return {"auth": true, "token": token};
+    } else {
+      return {"auth": false};
+    }
+  }
+
   Widget buildMateri() {
     return BlocBuilder<KelasDetailBloc, KelasDetailState>(
       builder: (context, state) {
@@ -310,13 +322,68 @@ class _KelasDetailState extends State<KelasDetail> {
                     ],
                   )))
               .toList();
-          return Container(
-            padding: EdgeInsets.all(15),
-            decoration: decorationBox,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: listMateri,
-            ),
+          return Column(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.all(15),
+                decoration: decorationBox,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.alarm, color: Colors.red),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Sedang berlangsung", style: TextStyle(color: Colors.red),)
+                      ],
+                    ),
+
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return BacaMateri(
+                            index: 0,
+                            slug : widget.slug,
+                          );
+                        }));
+                      }, child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.chrome_reader_mode_outlined, size: 25,),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("Baca Materi", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.amber,
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        textStyle: TextStyle(color: Colors.white),
+                      ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                padding: EdgeInsets.all(15),
+                decoration: decorationBox,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: listMateri,
+                ),
+              ),
+            ],
           );
         }
         return LoadingCard();
@@ -355,7 +422,7 @@ class _KelasDetailState extends State<KelasDetail> {
                                     idFasilitator: idFasilitator,
                                     slug2: e.slug2!,
                                   );
-                                }else{
+                                } else {
                                   return TugasReview(
                                     slug: e.slug!,
                                     idSub: e.id!,
