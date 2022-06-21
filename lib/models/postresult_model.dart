@@ -16,7 +16,7 @@ class PostResult {
   static Future<PostResult> connectToAPI(
       String? urlSertifikat, String? isWeb, int? idEvent) async {
     String token = await getToken();
-    String apiUrl = "https://ruangumkm.ilmanaf.com/api/download-sertifikat";
+    String apiUrl = baseUrl + "/api/download-sertifikat";
 
     var apiResult = await http.post(Uri.parse(apiUrl), headers: {
       'Authorization': 'Bearer ' + token
