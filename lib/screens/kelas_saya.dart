@@ -42,7 +42,12 @@ class _KelasSayaState extends State<KelasSaya> {
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
-        setState(() {});
+          setState(() {});
+        // if(state is LoginFinished){
+        // }
+        // if(state is LogoutFinished){
+        //   setState(() {});
+        // }
       },
       child: FutureBuilder<Map<String, dynamic>>(
         future: checkAuth(),

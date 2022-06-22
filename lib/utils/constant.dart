@@ -6,7 +6,7 @@ const String baseUrl = "https://ruangumkm.ilmanaf.com";
 Future<String> getToken() async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? token = await prefs.getString('token');
-  return token!;
+  return token?? "";
 }
 
 Future<int> getIdUser() async{
