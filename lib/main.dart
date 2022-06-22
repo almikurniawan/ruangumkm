@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:online_course/blocs/chat/chat_bloc.dart';
 import 'package:online_course/blocs/dashboard/dashboard_bloc.dart';
 import 'package:online_course/blocs/dashboard/dashboard_state.dart';
@@ -14,15 +15,18 @@ import 'package:online_course/blocs/peringkat/peringkat_bloc.dart';
 import 'package:online_course/blocs/profile/profile_bloc.dart';
 import 'package:online_course/blocs/register/register_bloc.dart';
 import 'package:online_course/blocs/register/register_state.dart';
+import 'package:online_course/blocs/sertifikat/sertifikat_bloc.dart';
 import 'package:online_course/blocs/tugas/tugas_bloc.dart';
 import 'package:online_course/blocs/tugas_submit/tugas_submit_bloc.dart';
 import 'package:online_course/blocs/tugas_submit/tugas_submit_event.dart';
 import 'package:online_course/screens/splash_screen.dart';
 import 'theme/color.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize();
   runApp(MyApp());
 }
 
@@ -67,6 +71,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (BuildContext context) {
           return ProfileBloc();
         }),
+        BlocProvider(create: (BuildContext context) {
+          return SertifikatBloc();
+        }),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -81,26 +88,26 @@ class MyApp extends StatelessWidget {
             tabBarTheme: TabBarTheme(
               labelColor: Colors.white,
               unselectedLabelColor: Colors.grey,
-              unselectedLabelStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              unselectedLabelStyle:
+                  TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               labelStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Color(0xff4a8f9f),
-
               ),
               indicatorSize: TabBarIndicatorSize.tab,
               // labelPadding: EdgeInsets.symmetric(horizontal: 2,),
             ),
             inputDecorationTheme: InputDecorationTheme(
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                labelStyle: TextStyle(color: primary),
-                border: InputBorder.none,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                ),
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              labelStyle: TextStyle(color: primary),
+              border: InputBorder.none,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              ),
             ),
             textTheme: TextTheme(
               headline1: TextStyle(
