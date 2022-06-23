@@ -247,8 +247,9 @@ class _TugasPageState extends State<TugasPage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
+                                            (curState.komentars[index].aksi=="PESERTA") ? 
                                             curState
-                                                .komentars[index].namaPeserta!,
+                                                .komentars[index].namaPeserta! : "Fasilitator",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyText1!

@@ -26,9 +26,9 @@ class _BacaMateriState extends State<BacaMateri> {
   List<dynamic> dataNavigasi = [];
   double posisiKiri = -210;
   int index = 0;
-  late YoutubePlayerController? _controller;
-  late VideoPlayerController _controllerVideo;
-  late Future<void> _initializeVideoPlayerFuture;
+  YoutubePlayerController? _controller;
+  VideoPlayerController? _controllerVideo;
+  Future<void>? _initializeVideoPlayerFuture;
 
   @override
   void initState() {
@@ -58,15 +58,15 @@ class _BacaMateriState extends State<BacaMateri> {
   @override
   void deactivate() {
     // Pauses video while navigating to next page.
-    _controller!.pause();
-    _controllerVideo.pause();
+    _controller?.pause();
+    _controllerVideo?.pause();
     super.deactivate();
   }
 
   @override
   void dispose() {
-    _controller!.dispose();
-    _controllerVideo.dispose();
+    _controller?.dispose();
+    _controllerVideo?.dispose();
     super.dispose();
   }
 
@@ -244,21 +244,21 @@ class _BacaMateriState extends State<BacaMateri> {
       if (nameSplit[nameSplit.length - 1] == "pdf") {
         type = "pdf";
         componentMateri = Container(
-          width : double.infinity,
-          height : 500,
+          width: double.infinity,
+          height: 500,
           child: SfPdfViewer.network(
-                'https://ruangumkm.ilmanaf.com/public/file_materi/'+file),
+              'https://ruangumkm.ilmanaf.com/public/file_materi/' + file),
         );
       } else {
         type = "video";
         _controllerVideo = VideoPlayerController.network(
-          'https://ruangumkm.ilmanaf.com/public/storage/videos/'+file,
+          'https://ruangumkm.ilmanaf.com/public/storage/videos/' + file,
         );
 
-        _initializeVideoPlayerFuture = _controllerVideo.initialize();
+        _initializeVideoPlayerFuture = _controllerVideo!.initialize();
 
         final chewieController = ChewieController(
-          videoPlayerController: _controllerVideo,
+          videoPlayerController: _controllerVideo!,
           autoPlay: true,
           looping: true,
         );
@@ -268,7 +268,7 @@ class _BacaMateriState extends State<BacaMateri> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return AspectRatio(
-                aspectRatio: _controllerVideo.value.aspectRatio,
+                aspectRatio: _controllerVideo!.value.aspectRatio,
                 child: Chewie(
                   controller: chewieController,
                 ),

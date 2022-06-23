@@ -16,6 +16,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         await prefs.setString('token', login['token']);
         await prefs.setInt("id_user", login['id_user']);
         await prefs.setString("user_name", login['name']);
+        bool? hasToken = await prefs.containsKey('token');
+        print("Punya token");
+        print(hasToken);
       }
       emit(LoginFinished(errorCode: login['errorCode'], errorMessage: login['errorMessage']));
       

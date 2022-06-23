@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_course/blocs/login/login_bloc.dart';
 import 'package:online_course/blocs/login/login_event.dart';
+import 'package:online_course/blocs/login/login_state.dart';
 import 'package:online_course/screens/register.dart';
 import 'package:online_course/theme/animation.dart';
 import 'package:online_course/widgets/contant.dart';
@@ -17,7 +18,6 @@ class _LoginState extends State<Login> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   final feature = ["Login"];
-  // final feature = ["Login", "Registrasi"];
 
   int i = 0;
 
@@ -172,6 +172,21 @@ class _LoginState extends State<Login> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        BlocBuilder<LoginBloc, LoginState>(
+                                          builder: (context, state) {
+                                            if(state is LoginFinished){
+                                              if(state.errorCode>0){
+                                                return Text("* "+state.errorMessage, style: TextStyle(
+                                                  color: Colors.red
+                                                ),);
+                                              }
+                                            }
+                                            return Container();
+                                          },
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
                                         TextField(
                                           // readOnly: true, // * Just for Debug
                                           controller: username,
