@@ -50,7 +50,7 @@ class _TugasPageState extends State<TugasPage> {
   Widget build(BuildContext context) {
     return BlocListener<TugasSubmitBloc, TugasSubmitState>(
       listener: (context, state) {
-        if(state is TugasSubmitFinishState){
+        if (state is TugasSubmitFinishState) {
           Navigator.pop(context);
         }
       },
@@ -113,8 +113,40 @@ class _TugasPageState extends State<TugasPage> {
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   Widget soal = Text("soal");
-                                  if (state.soal![index].value == "text" ||
-                                      state.soal![index].value == "textarea") {
+                                  if (state.soal![index].value == "radio") {
+                                    List<Widget> jawaban = [
+                                      Text(
+                                        state.soal![index].soal!,
+                                        textAlign: TextAlign.justify,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1,
+                                      )
+                                    ];
+                                    state.jawaban![index].forEach((e) {
+                                      jawaban.add(
+                                        RadioListTile<String>(
+                                          title: Text(e['jawaban']),
+                                          value: e['jawaban'],
+                                          groupValue:
+                                              state.jawabanPeserta![index],
+                                          onChanged: (value) {
+                                            _tugasSubmitBloc.add(
+                                              TugasSubmitChangeJawabanevent(
+                                                  index: index,
+                                                  jawaban: e['jawaban']),
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    });
+                                    soal = Container(
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: jawaban),
+                                    );
+                                  } else {
                                     soal = Container(
                                       child: Column(
                                           crossAxisAlignment:
@@ -133,9 +165,10 @@ class _TugasPageState extends State<TugasPage> {
                                             TextField(
                                               onChanged: (value) {
                                                 _tugasSubmitBloc.add(
-                                                    TugasSubmitChangeJawabanevent(
-                                                        index: index,
-                                                        jawaban: value));
+                                                  TugasSubmitChangeJawabanevent(
+                                                      index: index,
+                                                      jawaban: value),
+                                                );
                                               },
                                             ),
                                             SizedBox(
@@ -143,33 +176,6 @@ class _TugasPageState extends State<TugasPage> {
                                             ),
                                           ]),
                                     );
-                                  } else {
-                                    List<Widget> jawaban = [
-                                      Text(
-                                        state.soal![index].soal!,
-                                        textAlign: TextAlign.justify,
-                                        style:
-                                            Theme.of(context).textTheme.subtitle1,
-                                      )
-                                    ];
-                                    state.jawaban![index].forEach((e) {
-                                      jawaban.add(RadioListTile<String>(
-                                        title: Text(e['jawaban']),
-                                        value: e['jawaban'],
-                                        groupValue: state.jawabanPeserta![index],
-                                        onChanged: (value) {
-                                          _tugasSubmitBloc.add(
-                                              TugasSubmitChangeJawabanevent(
-                                                  index: index,
-                                                  jawaban: e['jawaban']));
-                                        },
-                                      ));
-                                    });
-                                    soal = Container(
-                                        child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: jawaban));
                                   }
                                   return soal;
                                 },
@@ -230,7 +236,8 @@ class _TugasPageState extends State<TugasPage> {
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 10),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       CircleAvatar(
                                         radius: 20.0,
@@ -250,14 +257,17 @@ class _TugasPageState extends State<TugasPage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            (curState.komentars[index].aksi=="PESERTA") ? 
-                                            curState
-                                                .komentars[index].namaPeserta! : "Fasilitator",
+                                            (curState.komentars[index].aksi ==
+                                                    "PESERTA")
+                                                ? curState.komentars[index]
+                                                    .namaPeserta!
+                                                : "Fasilitator",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyText1!
                                                 .merge(TextStyle(
-                                                    fontWeight: FontWeight.bold)),
+                                                    fontWeight:
+                                                        FontWeight.bold)),
                                           ),
                                           Text(
                                             curState.komentars[index].aksi! +
@@ -272,9 +282,10 @@ class _TugasPageState extends State<TugasPage> {
                                                       .width -
                                                   100,
                                               child: Text(
-                                                  curState
-                                                      .komentars[index].komentar!,
-                                                  style: TextStyle(fontSize: 16),
+                                                  curState.komentars[index]
+                                                      .komentar!,
+                                                  style:
+                                                      TextStyle(fontSize: 16),
                                                   softWrap: true,
                                                   textAlign: TextAlign.left)),
                                         ],
@@ -319,11 +330,13 @@ class _TugasPageState extends State<TugasPage> {
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(5.0)),
-                                    borderSide: BorderSide(color: Colors.green)),
+                                    borderSide:
+                                        BorderSide(color: Colors.green)),
                                 focusedBorder: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(5.0)),
-                                    borderSide: BorderSide(color: Colors.green)),
+                                    borderSide:
+                                        BorderSide(color: Colors.green)),
                               ),
                             ),
                             SizedBox(

@@ -33,16 +33,19 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     _dashboardBloc = BlocProvider.of<DashboardBloc>(context);
-    _dashboardBloc.add(DashboardLoadEvent());
+    _dashboardBloc.add(
+      DashboardLoadEvent(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: appBgColor,
-        body: SingleChildScrollView(
-          child: buildBody(),
-        ));
+      backgroundColor: appBgColor,
+      body: SingleChildScrollView(
+        child: buildBody(),
+      ),
+    );
   }
 
   Widget buildBody() {
@@ -64,19 +67,6 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 800, vertical: 180),
-              //   child: Column(
-              //     children: [
-              // Text(
-              //   "Menangkan Persaingan Global",
-              //   style: Theme.of(context).textTheme.headline1,
-              // ),
-              // SizedBox(height: 45),
-              // Text(
-              //   "Kuasai skill digital dan akses peluang kerja dari seluruh dunia",
-              //   style: Theme.of(context).textTheme.subtitle1,
-              // ),
-              //     ],
-              //   ),
             )
           ],
         ),
@@ -88,8 +78,6 @@ class _HomePageState extends State<HomePage> {
               topRight: const Radius.circular(40.0),
             ),
           ),
-          // width: double.infinity,
-          // color: Colors.white,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -100,16 +88,16 @@ class _HomePageState extends State<HomePage> {
               Row(
                 children: [
                   IconCircular(
-                      color: Color(0xFFF8C994),
-                      icon: Icon(Icons.card_travel,
-                          size: 30, color: Colors.amber[700])),
+                    color: Color(0xFFF8C994),
+                    icon: Icon(Icons.card_travel,
+                        size: 30, color: Colors.amber[700]),
+                  ),
                   SizedBox(width: 20),
                   Text(
                     "Pelajari Apa Saja",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .merge(TextStyle(fontWeight: FontWeight.bold)),
+                    style: Theme.of(context).textTheme.bodyText1!.merge(
+                          TextStyle(fontWeight: FontWeight.bold),
+                        ),
                   )
                 ],
               ),
@@ -119,16 +107,16 @@ class _HomePageState extends State<HomePage> {
               Row(
                 children: [
                   IconCircular(
-                      color: Color(0xffB7B3F8),
-                      icon: Icon(Icons.share_outlined,
-                          size: 30, color: Colors.blue)),
+                    color: Color(0xffB7B3F8),
+                    icon: Icon(Icons.share_outlined,
+                        size: 30, color: Colors.blue),
+                  ),
                   SizedBox(width: 20),
                   Text(
                     "Pembelajaran Fleksibel",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .merge(TextStyle(fontWeight: FontWeight.bold)),
+                    style: Theme.of(context).textTheme.bodyText1!.merge(
+                          TextStyle(fontWeight: FontWeight.bold),
+                        ),
                   )
                 ],
               ),
@@ -138,15 +126,15 @@ class _HomePageState extends State<HomePage> {
               Row(
                 children: [
                   IconCircular(
-                      color: Color(0xffb2f4dc),
-                      icon: Icon(Icons.person, size: 30, color: Colors.green)),
+                    color: Color(0xffb2f4dc),
+                    icon: Icon(Icons.person, size: 30, color: Colors.green),
+                  ),
                   SizedBox(width: 20),
                   Text(
                     "Belajar Dengan Ahlinya",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .merge(TextStyle(fontWeight: FontWeight.bold)),
+                    style: Theme.of(context).textTheme.bodyText1!.merge(
+                          TextStyle(fontWeight: FontWeight.bold),
+                        ),
                   )
                 ],
               )
@@ -242,24 +230,31 @@ class _HomePageState extends State<HomePage> {
       }
 
       return CarouselSlider(
-          options: CarouselOptions(
-            height: 290,
-            enlargeCenterPage: true,
-            disableCenter: true,
-            viewportFraction: .75,
-          ),
-          items: List.generate(jumlahItem, (index) {
-            if (currentState.loading)
-              return LoadingCard();
-            else
-              return GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => KelasDetail(
-                    slug: currentState.kelasTerbaru![index].slug!,
-                  )));
-                },
-                child: KelasSayaItem(kelas: currentState.kelasTerbaru![index]));
-          }));
+        options: CarouselOptions(
+          height: 290,
+          enlargeCenterPage: true,
+          disableCenter: true,
+          viewportFraction: .75,
+        ),
+        items: List.generate(jumlahItem, (index) {
+          if (currentState.loading)
+            return LoadingCard();
+          else
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => KelasDetail(
+                      slug: currentState.kelasTerbaru![index].slug!,
+                    ),
+                  ),
+                );
+              },
+              child: KelasSayaItem(kelas: currentState.kelasTerbaru![index]),
+            );
+        }),
+      );
     });
   }
 
@@ -275,24 +270,31 @@ class _HomePageState extends State<HomePage> {
       }
 
       return CarouselSlider(
-          options: CarouselOptions(
-            height: 290,
-            enlargeCenterPage: true,
-            disableCenter: true,
-            viewportFraction: .75,
-          ),
-          items: List.generate(jumlahItem, (index) {
-            if (currentState.loading)
-              return LoadingCard();
-            else
-              return GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => KelasDetail(
-                    slug: currentState.kelasTerpopuler![index].slug!,
-                  )));
-                },
-                child: KelasSayaItem(kelas: currentState.kelasTerpopuler![index]));
-          }));
+        options: CarouselOptions(
+          height: 290,
+          enlargeCenterPage: true,
+          disableCenter: true,
+          viewportFraction: .75,
+        ),
+        items: List.generate(jumlahItem, (index) {
+          if (currentState.loading)
+            return LoadingCard();
+          else
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => KelasDetail(
+                      slug: currentState.kelasTerpopuler![index].slug!,
+                    ),
+                  ),
+                );
+              },
+              child: KelasSayaItem(kelas: currentState.kelasTerpopuler![index]),
+            );
+        }),
+      );
     });
   }
 
@@ -307,31 +309,40 @@ class _HomePageState extends State<HomePage> {
         jumlahItem = currentState.kelasMendatang!.length;
         if (jumlahItem == 0) {
           return Center(
-              child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: NoData(),
-          ));
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: NoData(),
+            ),
+          );
         }
       }
 
       return CarouselSlider(
-          options: CarouselOptions(
-            height: 290,
-            enlargeCenterPage: true,
-            disableCenter: true,
-            viewportFraction: .75,
-          ),
-          items: List.generate(jumlahItem, (index) {
-            if (currentState.loading)
-              return LoadingCard();
-            else
-              return GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => KelasDetail(
-                    slug: currentState.kelasMendatang![index].slug!,
-                  )));
-                }, child: KelasSayaItem(kelas: currentState.kelasMendatang![index]));
-          }));
+        options: CarouselOptions(
+          height: 290,
+          enlargeCenterPage: true,
+          disableCenter: true,
+          viewportFraction: .75,
+        ),
+        items: List.generate(jumlahItem, (index) {
+          if (currentState.loading)
+            return LoadingCard();
+          else
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => KelasDetail(
+                      slug: currentState.kelasMendatang![index].slug!,
+                    ),
+                  ),
+                );
+              },
+              child: KelasSayaItem(kelas: currentState.kelasMendatang![index]),
+            );
+        }),
+      );
     });
   }
 
@@ -352,11 +363,12 @@ class _HomePageState extends State<HomePage> {
           children: List.generate(
             jumlahItem,
             (index) => Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: (state.loading)
-                    ? LoadingFasilitator()
-                    : FasilitatorItem(
-                        fasilitator: currentState.fasilitator![index])),
+              padding: const EdgeInsets.only(right: 10),
+              child: (state.loading)
+                  ? LoadingFasilitator()
+                  : FasilitatorItem(
+                      fasilitator: currentState.fasilitator![index]),
+            ),
           ),
         ),
       );

@@ -51,9 +51,15 @@ class _KelasDetailState extends State<KelasDetail> {
     _tugasBloc = BlocProvider.of<TugasBloc>(context);
     _peringkatBloc = BlocProvider.of<PeringkatBloc>(context);
 
-    _blocKelasDetail.add(KelasDetailLoadEvent(slug: widget.slug));
-    _tugasBloc.add(TugasLoadEvent(slug: widget.slug));
-    _peringkatBloc.add(PeringkatLoadEvent(slug: widget.slug));
+    _blocKelasDetail.add(
+      KelasDetailLoadEvent(slug: widget.slug),
+    );
+    _tugasBloc.add(
+      TugasLoadEvent(slug: widget.slug),
+    );
+    _peringkatBloc.add(
+      PeringkatLoadEvent(slug: widget.slug),
+    );
   }
 
   Widget buildHeader() {
@@ -90,15 +96,16 @@ class _KelasDetailState extends State<KelasDetail> {
               padding: EdgeInsets.all(15),
               decoration: decorationBox,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("Deskripsi Event",
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .merge(TextStyle(
+                  Text(
+                    "Deskripsi Event",
+                    style: Theme.of(context).textTheme.subtitle2!.merge(
+                          TextStyle(
                             fontWeight: FontWeight.bold,
-                          ))),
+                          ),
+                        ),
+                  ),
                   SizedBox(
                     height: 10,
                   ),
@@ -109,7 +116,7 @@ class _KelasDetailState extends State<KelasDetail> {
                     textAlign: TextAlign.justify,
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   Container(
                     width: double.infinity,
@@ -127,17 +134,18 @@ class _KelasDetailState extends State<KelasDetail> {
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
-                  Text("Daftar Materi",
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .merge(TextStyle(
+                  Text(
+                    "Daftar Materi",
+                    style: Theme.of(context).textTheme.subtitle1!.merge(
+                          TextStyle(
                             fontWeight: FontWeight.bold,
-                          ))),
+                          ),
+                        ),
+                  ),
                   SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   MediaQuery.removePadding(
                     context: context,
@@ -166,13 +174,14 @@ class _KelasDetailState extends State<KelasDetail> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Detail",
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .merge(TextStyle(
+                  Text(
+                    "Detail",
+                    style: Theme.of(context).textTheme.subtitle1!.merge(
+                          TextStyle(
                             fontWeight: FontWeight.bold,
-                          ))),
+                          ),
+                        ),
+                  ),
                   SizedBox(
                     height: 10,
                   ),
@@ -254,17 +263,18 @@ class _KelasDetailState extends State<KelasDetail> {
               height: 20,
             ),
             CarouselSlider(
-                options: CarouselOptions(
-                  height: 290,
-                  enlargeCenterPage: true,
-                  disableCenter: true,
-                  viewportFraction: .75,
-                ),
-                items: List.generate(state.eventTerkait!.length, (index) {
-                  return KelasSayaItem(
-                    kelas: state.eventTerkait![index],
-                  );
-                })),
+              options: CarouselOptions(
+                height: 290,
+                enlargeCenterPage: true,
+                disableCenter: true,
+                viewportFraction: .75,
+              ),
+              items: List.generate(state.eventTerkait!.length, (index) {
+                return KelasSayaItem(
+                  kelas: state.eventTerkait![index],
+                );
+              }),
+            ),
             SizedBox(
               height: 30,
             ),
@@ -277,17 +287,18 @@ class _KelasDetailState extends State<KelasDetail> {
               height: 20,
             ),
             CarouselSlider(
-                options: CarouselOptions(
-                  height: 290,
-                  enlargeCenterPage: true,
-                  disableCenter: true,
-                  viewportFraction: .75,
-                ),
-                items: List.generate(state.eventBaru!.length, (index) {
-                  return KelasSayaItem(
-                    kelas: state.eventBaru![index],
-                  );
-                }))
+              options: CarouselOptions(
+                height: 290,
+                enlargeCenterPage: true,
+                disableCenter: true,
+                viewportFraction: .75,
+              ),
+              items: List.generate(state.eventBaru!.length, (index) {
+                return KelasSayaItem(
+                  kelas: state.eventBaru![index],
+                );
+              }),
+            )
           ],
         );
       }
@@ -311,8 +322,9 @@ class _KelasDetailState extends State<KelasDetail> {
       builder: (context, state) {
         if (state is KelasDetailLoadedState) {
           List<Widget> listMateri = state.event!.extraMateri!
-              .map((e) => ListTile(
-                      title: Row(
+              .map(
+                (e) => ListTile(
+                  title: Row(
                     children: [
                       Bullet(),
                       SizedBox(
@@ -320,7 +332,9 @@ class _KelasDetailState extends State<KelasDetail> {
                       ),
                       Text(e.judul!),
                     ],
-                  )))
+                  ),
+                ),
+              )
               .toList();
           return Column(
             children: [
@@ -330,43 +344,68 @@ class _KelasDetailState extends State<KelasDetail> {
                 decoration: decorationBox,
                 child: Column(
                   children: [
+                    Text(
+                      "Daftar Materi",
+                      style: Theme.of(context).textTheme.subtitle2!.merge(
+                            TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
                     Row(
                       children: [
                         Icon(Icons.alarm, color: Colors.red),
                         SizedBox(
                           width: 10,
                         ),
-                        Text("Sedang berlangsung", style: TextStyle(color: Colors.red),)
+                        Text(
+                          "Sedang berlangsung",
+                          style: TextStyle(color: Colors.red),
+                        )
                       ],
                     ),
-
                     SizedBox(
                       height: 10,
                     ),
                     SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return BacaMateri(
-                            index: 0,
-                            slug : widget.slug,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) {
+                              return BacaMateri(
+                                index: 0,
+                                slug: widget.slug,
+                              );
+                            }),
                           );
-                        }));
-                      }, child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.chrome_reader_mode_outlined, size: 25,),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text("Baca Materi", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.amber,
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        textStyle: TextStyle(color: Colors.white),
-                      ),
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.chrome_reader_mode_outlined,
+                              size: 25,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Baca Materi",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.amber,
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          textStyle: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
@@ -396,17 +435,22 @@ class _KelasDetailState extends State<KelasDetail> {
       builder: (context, state) {
         if (state is TugasLoadedState) {
           List<Widget> listTugas = state.tugas
-              .map((e) => ListTile(
-                      title: Row(
+              .map(
+                (e) => ListTile(
+                  title: Row(
                     children: [
                       Bullet(),
                       SizedBox(
                         width: 10,
                       ),
-                      Expanded(child: Text(e.judul!)),
+                      Expanded(
+                        child: Text(e.judul!),
+                      ),
                       IconButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
                               builder: (context) {
                                 if (e.flag == 1) {
                                   return TugasPage(
@@ -431,11 +475,15 @@ class _KelasDetailState extends State<KelasDetail> {
                                   );
                                 }
                               },
-                            ));
-                          },
-                          icon: Icon(Icons.edit))
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.edit),
+                      )
                     ],
-                  )))
+                  ),
+                ),
+              )
               .toList();
           return Container(
             padding: EdgeInsets.all(15),
@@ -446,7 +494,9 @@ class _KelasDetailState extends State<KelasDetail> {
             ),
           );
         } else if (state is TugasInitial) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
         return Unauthenticated();
       },
@@ -461,32 +511,37 @@ class _KelasDetailState extends State<KelasDetail> {
           List<Widget> listPeringkat = state.peringkat.map((e) {
             nomor++;
             return ListTile(
-                title: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    nomor.toString() + ". " + e.name!,
+              title: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      nomor.toString() + ". " + e.name!,
+                    ),
                   ),
-                ),
-                Text(e.penilaian ?? "-",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .merge(TextStyle(fontSize: 14))),
-              ],
-            ));
+                  Text(
+                    e.penilaian ?? "-",
+                    style: Theme.of(context).textTheme.bodyText1!.merge(
+                          TextStyle(fontSize: 14),
+                        ),
+                  ),
+                ],
+              ),
+            );
           }).toList();
           return Container(
             padding: EdgeInsets.all(15),
             decoration: decorationBox,
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children:
-                    ListTile.divideTiles(context: context, tiles: listPeringkat)
-                        .toList()),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children:
+                  ListTile.divideTiles(context: context, tiles: listPeringkat)
+                      .toList(),
+            ),
           );
         } else if (state is PeringkatLoadedState) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
         return Unauthenticated();
       },
@@ -498,82 +553,86 @@ class _KelasDetailState extends State<KelasDetail> {
       builder: (context, state) {
         if (state is KelasDetailLoadedState) {
           return Container(
-              padding: EdgeInsets.all(15),
-              decoration: decorationBox,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Tentang Fasilitator",
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .merge(TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ))),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundImage: NetworkImage(
-                            "https://ruangumkm.ilmanaf.com/public/img/anggota/" +
-                                state.event!.fotoFasilitator!),
+            padding: EdgeInsets.all(15),
+            decoration: decorationBox,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Profil Fasilitator",
+                  style: Theme.of(context).textTheme.subtitle1!.merge(
+                        TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      SizedBox(
-                        width: 10,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundImage: NetworkImage(
+                          "https://ruangumkm.ilmanaf.com/public/img/anggota/" +
+                              state.event!.fotoFasilitator!),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          state.event!.extraFasilitator!.nama!,
+                          style: Theme.of(context).textTheme.subtitle1!.merge(
+                                TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                        ),
+                        Text(
+                          state.event!.extraFasilitator!.usaha!,
+                          softWrap: true,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  state.event!.extraFasilitator!.deskripsi!,
+                  style: Theme.of(context).textTheme.bodyText1!,
+                  softWrap: true,
+                  textAlign: TextAlign.justify,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Detail",
+                  style: Theme.of(context).textTheme.subtitle1!.merge(
+                        TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(state.event!.extraFasilitator!.nama!,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1!
-                                  .merge(TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ))),
-                          Text(
-                            state.event!.extraFasilitator!.usaha!,
-                            softWrap: true,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    state.event!.extraFasilitator!.deskripsi!,
-                    softWrap: true,
-                    textAlign: TextAlign.justify,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text("Detail",
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1!
-                          .merge(TextStyle(fontWeight: FontWeight.bold))),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text("Alamat", style: Theme.of(context).textTheme.bodyText1),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text("No. Telp",
-                      style: Theme.of(context).textTheme.bodyText1),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text("Email", style: Theme.of(context).textTheme.bodyText1),
-                ],
-              ));
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Alamat", style: Theme.of(context).textTheme.bodyText1),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("No. Telp", style: Theme.of(context).textTheme.bodyText1),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Email", style: Theme.of(context).textTheme.bodyText1),
+              ],
+            ),
+          );
         }
         return LoadingCard();
       },
@@ -585,78 +644,98 @@ class _KelasDetailState extends State<KelasDetail> {
     return BlocListener<TugasSubmitBloc, TugasSubmitState>(
       listener: (context, state) {
         if (state is TugasSubmitFinishState) {
-          _tugasBloc.add(TugasLoadEvent(slug: widget.slug));
+          _tugasBloc.add(
+            TugasLoadEvent(slug: widget.slug),
+          );
         }
       },
       child: DefaultTabController(
         length: 5,
         child: Scaffold(
-            body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverPersistentHeader(
-                  delegate: DelegateHeader(child: buildHeader())),
-              SliverOverlapAbsorber(
+          body: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                SliverPersistentHeader(
+                  delegate: DelegateHeader(
+                    child: buildHeader(),
+                  ),
+                ),
+                SliverOverlapAbsorber(
                   handle:
                       NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                   sliver: SliverPersistentHeader(
-                      pinned: true,
-                      floating: true,
-                      delegate: Delegate(
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.black12,
-                                      blurRadius: 5,
-                                      offset: Offset(0, 5))
-                                ],
-                              ),
-                              child: TabBar(
-                                isScrollable: true,
-                                tabs: [
-                                  "Ringkasan",
-                                  "Materi",
-                                  "Tugas",
-                                  "Peringkat",
-                                  "Profil Fasilitator"
-                                ].map((String name) {
-                                  return Tab(
-                                    text: name,
-                                  );
-                                }).toList(),
-                              ),
+                    pinned: true,
+                    floating: true,
+                    delegate: Delegate(
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 5),
+                                )
+                              ],
                             ),
-                          ],
-                        ),
-                      ))),
-            ];
-          },
-          body: TabBarView(
-            children: [
-              ContainerTabView(
-                  child: SliverToBoxAdapter(child: buildRingkasan()),
-                  indexKey: 1),
-              ContainerTabView(
-                indexKey: 2,
-                child: SliverToBoxAdapter(child: buildMateri()),
-              ),
-              ContainerTabView(
-                  child: SliverToBoxAdapter(child: buildTugas()), indexKey: 3),
-              ContainerTabView(
-                  child: SliverToBoxAdapter(child: buildPeringkat()),
-                  indexKey: 4),
-              ContainerTabView(
-                  child: SliverToBoxAdapter(child: buildFasilitator()),
-                  indexKey: 5),
-            ],
+                            child: TabBar(
+                              isScrollable: true,
+                              tabs: [
+                                "Ringkasan",
+                                "Materi",
+                                "Tugas",
+                                "Peringkat",
+                                "Profil Fasilitator"
+                              ].map((String name) {
+                                return Tab(
+                                  text: name,
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ];
+            },
+            body: TabBarView(
+              children: [
+                ContainerTabView(
+                    child: SliverToBoxAdapter(
+                      child: buildRingkasan(),
+                    ),
+                    indexKey: 1),
+                ContainerTabView(
+                  indexKey: 2,
+                  child: SliverToBoxAdapter(
+                    child: buildMateri(),
+                  ),
+                ),
+                ContainerTabView(
+                    child: SliverToBoxAdapter(
+                      child: buildTugas(),
+                    ),
+                    indexKey: 3),
+                ContainerTabView(
+                    child: SliverToBoxAdapter(
+                      child: buildPeringkat(),
+                    ),
+                    indexKey: 4),
+                ContainerTabView(
+                    child: SliverToBoxAdapter(
+                      child: buildFasilitator(),
+                    ),
+                    indexKey: 5),
+              ],
+            ),
           ),
-        )),
+        ),
       ),
     );
   }
@@ -668,10 +747,13 @@ class Bullet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 10,
-        height: 10,
-        decoration:
-            BoxDecoration(shape: BoxShape.circle, color: Color(0xff4a8f9f)));
+      width: 10,
+      height: 10,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Color(0xff4a8f9f),
+      ),
+    );
   }
 }
 
