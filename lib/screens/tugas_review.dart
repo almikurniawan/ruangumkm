@@ -124,6 +124,7 @@ class _TugasReviewState extends State<TugasReview> {
                                           children: [
                                             Text(
                                               state.soal![index].soal!,
+                                              textAlign: TextAlign.justify,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle1,

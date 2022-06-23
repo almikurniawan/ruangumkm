@@ -113,7 +113,8 @@ class _TugasPageState extends State<TugasPage> {
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   Widget soal = Text("soal");
-                                  if (state.soal![index].value == "text") {
+                                  if (state.soal![index].value == "text" ||
+                                      state.soal![index].value == "textarea") {
                                     soal = Container(
                                       child: Column(
                                           crossAxisAlignment:
@@ -121,6 +122,7 @@ class _TugasPageState extends State<TugasPage> {
                                           children: [
                                             Text(
                                               state.soal![index].soal!,
+                                              textAlign: TextAlign.justify,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle1,
@@ -145,6 +147,7 @@ class _TugasPageState extends State<TugasPage> {
                                     List<Widget> jawaban = [
                                       Text(
                                         state.soal![index].soal!,
+                                        textAlign: TextAlign.justify,
                                         style:
                                             Theme.of(context).textTheme.subtitle1,
                                       )

@@ -120,7 +120,8 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
                                   Widget soal = Text("soal");
                                   // _controller.add(TextEditingController());
                                   // _controller[index].text = state.jawabanPeserta![index];
-                                  if (state.soal![index].value == "text") {
+                                  if (state.soal![index].value == "text" ||
+                                      state.soal![index].value == "textarea") {
                                     soal = Container(
                                       child: Column(
                                           crossAxisAlignment:
@@ -128,6 +129,7 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
                                           children: [
                                             Text(
                                               state.soal![index].soal!,
+                                              textAlign: TextAlign.justify,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle1,
@@ -147,6 +149,7 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
                                     List<Widget> jawaban = [
                                       Text(
                                         state.soal![index].soal!,
+                                        textAlign: TextAlign.justify,
                                         style:
                                             Theme.of(context).textTheme.subtitle1,
                                       )
