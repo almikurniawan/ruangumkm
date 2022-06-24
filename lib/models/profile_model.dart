@@ -35,7 +35,7 @@ class ProfileModel {
     username = json['username'];
     rememberToken = json['remember_token'];
     level = json['level'];
-    foto = json['foto'];
+    foto = json['foto_user'];
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -54,7 +54,7 @@ class ProfileModel {
     data['username'] = this.username;
     data['remember_token'] = this.rememberToken;
     data['level'] = this.level;
-    data['foto'] = this.foto;
+    data['foto_user'] = this.foto;
     data['status'] = this.status;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;

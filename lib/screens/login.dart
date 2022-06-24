@@ -172,21 +172,6 @@ class _LoginState extends State<Login> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        BlocBuilder<LoginBloc, LoginState>(
-                                          builder: (context, state) {
-                                            if(state is LoginFinished){
-                                              if(state.errorCode>0){
-                                                return Text("* "+state.errorMessage, style: TextStyle(
-                                                  color: Colors.red
-                                                ),);
-                                              }
-                                            }
-                                            return Container();
-                                          },
-                                        ),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
                                         TextField(
                                           // readOnly: true, // * Just for Debug
                                           controller: username,
@@ -200,20 +185,49 @@ class _LoginState extends State<Login> {
                                                   labelText: "Username"),
                                         ),
                                         SizedBox(
-                                          height: 20,
+                                          height: 10,
+                                        ),
+                                        BlocBuilder<LoginBloc, LoginState>(
+                                          builder: (context, state) {
+                                            if (state is LoginFinished) {
+                                              if (state.errorCode > 0) {
+                                                return Text(
+                                                  "* " + state.errorMessage,
+                                                  style: TextStyle(
+                                                      color: Colors.red),
+                                                );
+                                              }
+                                            }
+                                            return Container();
+                                          },
                                         ),
                                         TextField(
-                                          // readOnly: true, // * Just for Debug
                                           obscureText: true,
                                           cursorColor: Colors.black,
                                           style: TextStyle(color: Colors.black),
                                           showCursor: true,
                                           controller: password,
-                                          //cursorColor: mainColor,
                                           decoration: kTextFiledInputDecoration
                                               .copyWith(
                                                   hintText: "******",
                                                   labelText: "Password"),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        BlocBuilder<LoginBloc, LoginState>(
+                                          builder: (context, state) {
+                                            if (state is LoginFinished) {
+                                              if (state.errorCode > 0) {
+                                                return Text(
+                                                  "* " + state.errorMessage,
+                                                  style: TextStyle(
+                                                      color: Colors.red),
+                                                );
+                                              }
+                                            }
+                                            return Container();
+                                          },
                                         ),
                                         SizedBox(height: 20),
                                         SizedBox(

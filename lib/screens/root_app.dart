@@ -21,31 +21,31 @@ class _RootAppState extends State<RootApp> with TickerProviderStateMixin {
     {
       "icon": "assets/icons/home.svg",
       "active_icon": "assets/icons/home.svg",
+      "namaMenu": "Beranda",
       "page": HomePage(),
     },
-    {
-      "icon": "assets/icons/chat.svg",
-      "active_icon": "assets/icons/chat.svg",
-      "page": ChatPage(),
-    },
+    // {
+    //   "icon": "assets/icons/chat.svg",
+    //   "active_icon": "assets/icons/chat.svg",
+    //   "namaMenu": "Pesan",
+    //   "page": ChatPage(),
+    // },
     {
       "icon": "assets/icons/search.svg",
       "active_icon": "assets/icons/search.svg",
+      "namaMenu": "Pencarian",
       "page": ExplorePage(),
     },
-    // {
-    //   "icon": "assets/icons/play.svg",
-    //   "active_icon": "assets/icons/play.svg",
-    //   "page": KelasSaya(),
-    // },
     {
       "icon": "assets/icons/work.svg",
       "active_icon": "assets/icons/play.svg",
+      "namaMenu": "Kelas Saya",
       "page": KelasSaya(),
     },
     {
       "icon": "assets/icons/profile.svg",
       "active_icon": "assets/icons/profile.svg",
+      "namaMenu": "Pengaturan",
       "page": AccountPage(),
     },
   ];
@@ -158,6 +158,7 @@ class _RootAppState extends State<RootApp> with TickerProviderStateMixin {
           children: List.generate(
             barItems.length,
             (index) => BottomBarItem(
+              namaMenu: barItems[index]["namaMenu"],
               barItems[index]["icon"],
               isActive: activeTab == index,
               activeColor: primary,

@@ -36,15 +36,17 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _komentarBloc = BlocProvider.of<KomentarBloc>(context);
     _tugasSubmitBloc = BlocProvider.of<TugasSubmitBloc>(context);
-    _komentarBloc.add(KomentarLoadEvent(slug: widget.slug));
+    _komentarBloc.add(
+      KomentarLoadEvent(slug: widget.slug),
+    );
     _tugasSubmitBloc.add(
-        TugasSubmitLoadSuntingEvent(slug1: widget.slug, slug2: widget.slug2));
+      TugasSubmitLoadSuntingEvent(slug1: widget.slug, slug2: widget.slug2),
+    );
     // Timer.periodic(Duration(seconds: 15), (timer) {
-    //   _komentarBloc.add(KomentarLoadEvent(slug: widget.slug));
+    //   _komentarBloc.add(KomentarLoadEvent(slug: widget.slug),);
     // });
   }
 
@@ -69,11 +71,13 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
                       color: Colors.black),
                 );
               }
-              return Text("Sunting Tugas",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black));
+              return Text(
+                "Sunting Tugas",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              );
             },
           ),
         ),
@@ -96,19 +100,19 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      BlocBuilder<TugasSubmitBloc, TugasSubmitState>(
-                        builder: (context, state) {
-                          if (state is TugasSubmitLoadedState) {
-                            return Text(state.judulTugas!,
-                                style: Theme.of(context).textTheme.subtitle1);
-                          }
-                          return Text("Tugas",
-                              style: Theme.of(context).textTheme.subtitle1);
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      // BlocBuilder<TugasSubmitBloc, TugasSubmitState>(
+                      //   builder: (context, state) {
+                      //     if (state is TugasSubmitLoadedState) {
+                      //       return Text("Sunting Tugas",
+                      //           style: Theme.of(context).textTheme.subtitle1);
+                      //     }
+                      //     return Text("Tugas",
+                      //         style: Theme.of(context).textTheme.subtitle1);
+                      //   },
+                      // ),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
                       BlocBuilder<TugasSubmitBloc, TugasSubmitState>(
                         builder: (context, state) {
                           if (state is TugasSubmitLoadedState) {
@@ -119,22 +123,31 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   Widget soal = Text("soal");
-                                  // _controller.add(TextEditingController());
+                                  // _controller.add(TextEditingController(),);
                                   // _controller[index].text = state.jawabanPeserta![index];
                                   if (state.soal![index].value == "radio") {
                                     List<Widget> jawaban = [
+                                      SizedBox(
+                                        height: 20,
+                                      ),
                                       Text(
                                         state.soal![index].soal!,
                                         textAlign: TextAlign.justify,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
                                       )
                                     ];
                                     state.jawaban![index].forEach((e) {
                                       jawaban.add(
                                         RadioListTile<String>(
-                                          title: Text(e['jawaban']),
+                                          title: Text(
+                                            e['jawaban'],
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.justify,
+                                          ),
                                           value: e['jawaban'],
                                           groupValue:
                                               state.jawabanPeserta![index],
@@ -160,12 +173,15 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
+                                            SizedBox(
+                                              height: 20,
+                                            ),
                                             Text(
                                               state.soal![index].soal!,
                                               textAlign: TextAlign.justify,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle1,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
                                             ),
                                             SizedBox(
                                               height: 10,
@@ -186,7 +202,9 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
                               ),
                             );
                           }
-                          return Center(child: CircularProgressIndicator());
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
                         },
                       )
                     ],
@@ -197,11 +215,14 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
                 ),
                 Center(
                   child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: primary),
-                      onPressed: () {
-                        _tugasSubmitBloc.add(TugasSubmitFinishSuntingEvent());
-                      },
-                      child: Text("Selesai")),
+                    style: ElevatedButton.styleFrom(primary: primary),
+                    onPressed: () {
+                      _tugasSubmitBloc.add(
+                        TugasSubmitFinishSuntingEvent(),
+                      );
+                    },
+                    child: Text("Selesai"),
+                  ),
                 ),
                 SizedBox(
                   height: 10,
@@ -221,7 +242,8 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
                     children: [
                       Text(
                         "Komentar",
-                        style: Theme.of(context).textTheme.subtitle1,
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 10,
@@ -265,32 +287,33 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
                                                 ? curState.komentars[index]
                                                     .namaPeserta!
                                                 : "Fasilitator",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1!
-                                                .merge(TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                           Text(
                                             curState.komentars[index].aksi! +
                                                 " " +
                                                 curState
                                                     .komentars[index].tanggal!,
-                                            style: TextStyle(fontSize: 10),
+                                            style: TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                           Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width -
-                                                  100,
-                                              child: Text(
-                                                  curState.komentars[index]
-                                                      .komentar!,
-                                                  style:
-                                                      TextStyle(fontSize: 16),
-                                                  softWrap: true,
-                                                  textAlign: TextAlign.left)),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width -
+                                                100,
+                                            child: Text(
+                                                curState
+                                                    .komentars[index].komentar!,
+                                                style: TextStyle(
+                                                  fontSize: 17,
+                                                ),
+                                                softWrap: true,
+                                                textAlign: TextAlign.left),
+                                          ),
                                         ],
                                       )
                                     ],
@@ -303,7 +326,7 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
                         },
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 30,
                       ),
                       Container(
                         child: Column(
@@ -311,15 +334,19 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
                           children: [
                             Text(
                               "Masukan Komentar",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1!
-                                  .merge(TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  )),
+                              style:
+                                  Theme.of(context).textTheme.bodyText1!.merge(
+                                        TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                             ),
                             Text(
-                                "Apakah belum jelas tentang tugas, bisa mengajukan pertanyaan kepada fasilitator"),
+                              "Apakah belum jelas tentang tugas, bisa mengajukan pertanyaan kepada fasilitator",
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
                             SizedBox(
                               height: 10,
                             ),
@@ -328,28 +355,32 @@ class _TugasSuntingPageState extends State<TugasSuntingPage> {
                               maxLines: null,
                               keyboardType: TextInputType.multiline,
                               decoration: InputDecoration(
-                                hintText: "Komentar",
+                                hintText: "  Komentar",
                                 contentPadding: EdgeInsets.all(2),
                                 enabledBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5.0)),
-                                    borderSide:
-                                        BorderSide(color: Colors.green)),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(5.0),
+                                  ),
+                                  borderSide: BorderSide(color: Colors.green),
+                                ),
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5.0)),
-                                    borderSide:
-                                        BorderSide(color: Colors.green)),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(5.0),
+                                  ),
+                                  borderSide: BorderSide(color: Colors.green),
+                                ),
                               ),
                             ),
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  _komentarBloc.add(KomentarAddEvent(
-                                      idSub: widget.idSub,
-                                      idFasilitator: widget.idFasilitator,
-                                      komentar: komentarController.text));
+                                  _komentarBloc.add(
+                                    KomentarAddEvent(
+                                        idSub: widget.idSub,
+                                        idFasilitator: widget.idFasilitator,
+                                        komentar: komentarController.text),
+                                  );
                                   komentarController.clear();
                                 },
                                 child: Text("Kirim"),
