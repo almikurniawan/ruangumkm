@@ -12,13 +12,11 @@ import 'package:online_course/blocs/tugas/tugas_bloc.dart';
 import 'package:online_course/blocs/tugas/tugas_event.dart';
 import 'package:online_course/blocs/tugas/tugas_state.dart';
 import 'package:online_course/blocs/tugas_submit/tugas_submit_bloc.dart';
-import 'package:online_course/blocs/tugas_submit/tugas_submit_event.dart';
 import 'package:online_course/blocs/tugas_submit/tugas_submit_state.dart';
 import 'package:online_course/screens/baca_materi.dart';
 import 'package:online_course/screens/tugas_page.dart';
 import 'package:online_course/screens/tugas_review.dart';
 import 'package:online_course/screens/tugas_sunting_page.dart';
-import 'package:online_course/theme/color.dart';
 import 'package:online_course/widgets/contant.dart';
 import 'package:online_course/widgets/header_kelas_detail.dart';
 import 'package:online_course/widgets/kelas_saya_item.dart';
@@ -45,7 +43,6 @@ class _KelasDetailState extends State<KelasDetail> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _blocKelasDetail = BlocProvider.of<KelasDetailBloc>(context);
     _tugasBloc = BlocProvider.of<TugasBloc>(context);
@@ -107,6 +104,25 @@ class _KelasDetailState extends State<KelasDetail> {
                         ),
                   ),
                   SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 190,
+                    child: CachedNetworkImage(
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                              image: imageProvider, fit: BoxFit.cover),
+                        ),
+                      ),
+                      imageUrl:
+                          "https://ruangumkm.ilmanaf.com/public/storage/thumbnail_event/original/" +
+                              state.event!.fotoEvent!,
+                    ),
+                  ),
+                  SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -118,27 +134,9 @@ class _KelasDetailState extends State<KelasDetail> {
                   SizedBox(
                     height: 15,
                   ),
-                  Container(
-                    width: double.infinity,
-                    height: 190,
-                    child: CachedNetworkImage(
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: imageProvider, fit: BoxFit.cover),
-                        ),
-                      ),
-                      imageUrl:
-                          "https://ruangumkm.ilmanaf.com/public/storage/thumbnail_event/original/" +
-                              state.event!.fotoEvent!,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
                   Text(
                     "Daftar Materi",
-                    style: Theme.of(context).textTheme.subtitle1!.merge(
+                    style: Theme.of(context).textTheme.subtitle2!.merge(
                           TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -176,7 +174,7 @@ class _KelasDetailState extends State<KelasDetail> {
                   ),
                   Text(
                     "Detail",
-                    style: Theme.of(context).textTheme.subtitle1!.merge(
+                    style: Theme.of(context).textTheme.subtitle2!.merge(
                           TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -194,7 +192,9 @@ class _KelasDetailState extends State<KelasDetail> {
                       Text(
                         "Tanggal Dimulai : " +
                             formatTanggal.format(tanggalMulai),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.bodyText1!.merge(
+                              TextStyle(fontSize: 17),
+                            ),
                       ),
                     ],
                   ),
@@ -210,7 +210,9 @@ class _KelasDetailState extends State<KelasDetail> {
                       Text(
                         "Tanggal Selesai : " +
                             formatTanggal.format(tanggalSelesai),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.bodyText1!.merge(
+                              TextStyle(fontSize: 17),
+                            ),
                       ),
                     ],
                   ),
@@ -227,7 +229,9 @@ class _KelasDetailState extends State<KelasDetail> {
                         "Durasi Event : " +
                             state.event!.selisihHari!.toString() +
                             " Hari",
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.bodyText1!.merge(
+                              TextStyle(fontSize: 17),
+                            ),
                       ),
                     ],
                   ),
@@ -241,7 +245,7 @@ class _KelasDetailState extends State<KelasDetail> {
                         width: 10,
                       ),
                       Text(
-                        "Durasi Event : " +
+                        "Peserta Event : " +
                             state.event!.jumlahPeserta!.toString() +
                             " Orang",
                         style: Theme.of(context).textTheme.bodyText1,
@@ -330,7 +334,12 @@ class _KelasDetailState extends State<KelasDetail> {
                       SizedBox(
                         width: 10,
                       ),
-                      Text(e.judul!),
+                      Text(
+                        e.judul!,
+                        style: Theme.of(context).textTheme.bodyText1!.merge(
+                              TextStyle(fontSize: 17),
+                            ),
+                      ),
                     ],
                   ),
                 ),
@@ -462,7 +471,12 @@ class _KelasDetailState extends State<KelasDetail> {
                         width: 10,
                       ),
                       Expanded(
-                        child: Text(e.judul!),
+                        child: Text(
+                          e.judul!,
+                          style: Theme.of(context).textTheme.bodyText1!.merge(
+                                TextStyle(fontSize: 17),
+                              ),
+                        ),
                       ),
                       IconButton(
                         onPressed: () {
@@ -507,8 +521,23 @@ class _KelasDetailState extends State<KelasDetail> {
             padding: EdgeInsets.all(15),
             decoration: decorationBox,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: listTugas,
+              children: [
+                Text(
+                  "Daftar Tugas",
+                  style: Theme.of(context).textTheme.subtitle2!.merge(
+                        TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: listTugas,
+                ),
+              ],
             ),
           );
         } else if (state is TugasInitial) {
@@ -534,12 +563,15 @@ class _KelasDetailState extends State<KelasDetail> {
                   Expanded(
                     child: Text(
                       nomor.toString() + ". " + e.name!,
+                      style: Theme.of(context).textTheme.bodyText1!.merge(
+                            TextStyle(fontSize: 17),
+                          ),
                     ),
                   ),
                   Text(
                     e.penilaian ?? "-",
                     style: Theme.of(context).textTheme.bodyText1!.merge(
-                          TextStyle(fontSize: 14),
+                          TextStyle(fontSize: 13),
                         ),
                   ),
                 ],
@@ -550,10 +582,25 @@ class _KelasDetailState extends State<KelasDetail> {
             padding: EdgeInsets.all(15),
             decoration: decorationBox,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children:
-                  ListTile.divideTiles(context: context, tiles: listPeringkat)
+              children: [
+                Text(
+                  "Daftar Peringkat",
+                  style: Theme.of(context).textTheme.subtitle2!.merge(
+                        TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: ListTile.divideTiles(
+                          context: context, tiles: listPeringkat)
                       .toList(),
+                ),
+              ],
             ),
           );
         } else if (state is PeringkatLoadedState) {
@@ -574,18 +621,18 @@ class _KelasDetailState extends State<KelasDetail> {
             padding: EdgeInsets.all(15),
             decoration: decorationBox,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   "Profil Fasilitator",
-                  style: Theme.of(context).textTheme.subtitle1!.merge(
+                  style: Theme.of(context).textTheme.subtitle2!.merge(
                         TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 15,
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -597,17 +644,15 @@ class _KelasDetailState extends State<KelasDetail> {
                               state.event!.fotoFasilitator!),
                     ),
                     SizedBox(
-                      width: 10,
+                      width: 15,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           state.event!.extraFasilitator!.nama!,
-                          style: Theme.of(context).textTheme.subtitle1!.merge(
-                                TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          style: Theme.of(context).textTheme.bodyText1!.merge(
+                                TextStyle(fontSize: 17),
                               ),
                         ),
                         Text(
@@ -632,22 +677,44 @@ class _KelasDetailState extends State<KelasDetail> {
                 ),
                 Text(
                   "Detail",
-                  style: Theme.of(context).textTheme.subtitle1!.merge(
+                  style: Theme.of(context).textTheme.subtitle2!.merge(
                         TextStyle(fontWeight: FontWeight.bold),
                       ),
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                Text("Alamat", style: Theme.of(context).textTheme.bodyText1),
-                SizedBox(
-                  height: 10,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Nama   : " + state.event!.extraFasilitator!.nama!,
+                            style: Theme.of(context).textTheme.bodyText1),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                            "Alamat   : " +
+                                state.event!.extraFasilitator!.alamat!,
+                            style: Theme.of(context).textTheme.bodyText1),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                            "No. Telp : " +
+                                state.event!.extraFasilitator!.noHp!,
+                            style: Theme.of(context).textTheme.bodyText1),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("Email     : " + state.event!.emailFasilitator!,
+                            style: Theme.of(context).textTheme.bodyText1),
+                      ],
+                    ),
+                  ],
                 ),
-                Text("No. Telp", style: Theme.of(context).textTheme.bodyText1),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Email", style: Theme.of(context).textTheme.bodyText1),
               ],
             ),
           );

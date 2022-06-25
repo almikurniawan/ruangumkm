@@ -90,19 +90,19 @@ class _TugasPageState extends State<TugasPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      BlocBuilder<TugasSubmitBloc, TugasSubmitState>(
-                        builder: (context, state) {
-                          if (state is TugasSubmitLoadedState) {
-                            return Text(state.judulTugas!,
-                                style: Theme.of(context).textTheme.subtitle1);
-                          }
-                          return Text("Tugas",
-                              style: Theme.of(context).textTheme.subtitle1);
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      // BlocBuilder<TugasSubmitBloc, TugasSubmitState>(
+                      //   builder: (context, state) {
+                      //     if (state is TugasSubmitLoadedState) {
+                      //       return Text("Pelaksanaan Tugas",
+                      //           style: Theme.of(context).textTheme.subtitle1);
+                      //     }
+                      //     return Text("Tugas",
+                      //         style: Theme.of(context).textTheme.subtitle1);
+                      //   },
+                      // ),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
                       BlocBuilder<TugasSubmitBloc, TugasSubmitState>(
                         builder: (context, state) {
                           if (state is TugasSubmitLoadedState) {
@@ -115,18 +115,27 @@ class _TugasPageState extends State<TugasPage> {
                                   Widget soal = Text("soal");
                                   if (state.soal![index].value == "radio") {
                                     List<Widget> jawaban = [
+                                      SizedBox(
+                                        height: 20,
+                                      ),
                                       Text(
                                         state.soal![index].soal!,
                                         textAlign: TextAlign.justify,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
                                       )
                                     ];
                                     state.jawaban![index].forEach((e) {
                                       jawaban.add(
                                         RadioListTile<String>(
-                                          title: Text(e['jawaban']),
+                                          title: Text(
+                                            e['jawaban'],
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.justify,
+                                          ),
                                           value: e['jawaban'],
                                           groupValue:
                                               state.jawabanPeserta![index],
@@ -152,17 +161,24 @@ class _TugasPageState extends State<TugasPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
+                                            SizedBox(
+                                              height: 20,
+                                            ),
                                             Text(
                                               state.soal![index].soal!,
                                               textAlign: TextAlign.justify,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle1,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
                                             ),
                                             SizedBox(
                                               height: 10,
                                             ),
                                             TextField(
+                                              decoration: InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                hintText: 'Masukkan Jawaban',
+                                              ),
                                               onChanged: (value) {
                                                 _tugasSubmitBloc.add(
                                                   TugasSubmitChangeJawabanevent(
@@ -218,7 +234,8 @@ class _TugasPageState extends State<TugasPage> {
                     children: [
                       Text(
                         "Komentar",
-                        style: Theme.of(context).textTheme.subtitle1,
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 10,
@@ -262,19 +279,18 @@ class _TugasPageState extends State<TugasPage> {
                                                 ? curState.komentars[index]
                                                     .namaPeserta!
                                                 : "Fasilitator",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1!
-                                                .merge(TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                           Text(
                                             curState.komentars[index].aksi! +
                                                 " " +
                                                 curState
                                                     .komentars[index].tanggal!,
-                                            style: TextStyle(fontSize: 10),
+                                            style: TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                           Container(
                                               width: MediaQuery.of(context)
@@ -300,7 +316,7 @@ class _TugasPageState extends State<TugasPage> {
                         },
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 30,
                       ),
                       Container(
                         child: Column(
@@ -316,7 +332,11 @@ class _TugasPageState extends State<TugasPage> {
                                   )),
                             ),
                             Text(
-                                "Apakah belum jelas tentang tugas, bisa mengajukan pertanyaan kepada fasilitator"),
+                              "Apakah belum jelas tentang tugas, bisa mengajukan pertanyaan kepada fasilitator",
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
                             SizedBox(
                               height: 10,
                             ),
@@ -325,7 +345,7 @@ class _TugasPageState extends State<TugasPage> {
                               maxLines: null,
                               keyboardType: TextInputType.multiline,
                               decoration: InputDecoration(
-                                hintText: "Komentar",
+                                hintText: "  Komentar",
                                 contentPadding: EdgeInsets.all(2),
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius:
