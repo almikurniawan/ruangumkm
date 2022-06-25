@@ -50,9 +50,7 @@ class _BacaMateriState extends State<BacaMateri> {
         dataNavigasi = response.data['response']['topik'];
         loading = false;
       });
-    } on DioError catch (e) {
-      print(e.response!.data);
-    }
+    } on DioError catch (e) {}
   }
 
   @override
@@ -77,16 +75,34 @@ class _BacaMateriState extends State<BacaMateri> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              dataNavigasi[index]['judul'],
-              style: Theme.of(context).textTheme.bodyText1,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  width: 10,
+                  height: 10,
+                  decoration:
+                      BoxDecoration(shape: BoxShape.circle, color: primary),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  dataNavigasi[index]['judul'],
+                  style: Theme.of(context).textTheme.bodyText1!.merge(
+                      TextStyle(fontWeight: FontWeight.bold, color: primary)),
+                ),
+              ],
             ),
             SizedBox(
-              height: 5,
+              height: 10,
             ),
             Divider(
               height: 1,
               color: Colors.grey[300],
+            ),
+            SizedBox(
+              height: 10,
             ),
             ListView.builder(
               shrinkWrap: true,
@@ -96,6 +112,14 @@ class _BacaMateriState extends State<BacaMateri> {
                   children: [
                     Row(
                       children: [
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Container(
+                          width: 10,
+                          height: 10,
+                          decoration: BoxDecoration(color: primary),
+                        ),
                         SizedBox(
                           width: 10,
                         ),
@@ -107,28 +131,40 @@ class _BacaMateriState extends State<BacaMateri> {
                       ],
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                     Divider(
                       height: 1,
                       color: Colors.grey[300],
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     ListView.builder(
                       shrinkWrap: true,
                       itemBuilder: (context, indexmateri) {
-                        return Row(
+                        return Column(
                           children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  width: 180,
+                                  child: Text(
+                                    dataNavigasi[index]['subtopik']
+                                                [indexSubTopik]['content']
+                                            [indexmateri]['judul'] ??
+                                        "Tugas",
+                                    style: TextStyle(color: primary),
+                                  ),
+                                ),
+                              ],
+                            ),
                             SizedBox(
-                              width: 20,
-                            ),
-                            Container(
-                              width: 150,
-                              child: Text(
-                                dataNavigasi[index]['subtopik'][indexSubTopik]
-                                        ['content'][indexmateri]['judul'] ??
-                                    "Tugas",
-                              ),
-                            ),
+                              height: 20,
+                            )
                           ],
                         );
                       },
@@ -161,17 +197,19 @@ class _BacaMateriState extends State<BacaMateri> {
         body: (loading)
             ? Center(child: CircularProgressIndicator())
             : Stack(children: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 50),
-                      (data[index]['tipe'] == "materi")
-                          ? buildMateri()
-                          : buildTugas()
-                    ],
+                SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 50),
+                        (data[index]['tipe'] == "materi")
+                            ? buildMateri()
+                            : buildTugas()
+                      ],
+                    ),
                   ),
                 ),
                 Positioned(
@@ -357,9 +395,13 @@ class _BacaMateriState extends State<BacaMateri> {
             ],
           ),
           Text(
-            // data[index][0]['judul'],
-            "Tugas",
+            data[index]['judul'],
             style: Theme.of(context).textTheme.subtitle1,
+          ),
+          Text(
+            data[index]['narasi'],
+            style: Theme.of(context).textTheme.bodyText1!,
+            textAlign: TextAlign.justify,
           ),
           SizedBox(
             height: 10,

@@ -370,43 +370,61 @@ class _KelasDetailState extends State<KelasDetail> {
                     SizedBox(
                       height: 10,
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) {
-                              return BacaMateri(
-                                index: 0,
-                                slug: widget.slug,
-                              );
-                            }),
+                    FutureBuilder(
+                      future: checkAuth(),
+                      builder: (context,
+                          AsyncSnapshot<Map<String, dynamic>> snapshot) {
+                        if (snapshot.hasData) {
+                          Map<String, dynamic> data = snapshot.data!;
+                          if (data['auth'] == true) {
+                            return SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return BacaMateri(
+                                        index: 0,
+                                        slug: widget.slug,
+                                      );
+                                    }),
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.chrome_reader_mode_outlined,
+                                      size: 25,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Baca Materi",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.amber,
+                                  padding: EdgeInsets.symmetric(vertical: 20),
+                                  textStyle: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            );
+                          } else {
+                            return Text("Silahkan Login Terlebih dahulu untuk membaca materi",style: TextStyle(color: Colors.red));
+                          }
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
                           );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.chrome_reader_mode_outlined,
-                              size: 25,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "Baca Materi",
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.amber,
-                          padding: EdgeInsets.symmetric(vertical: 20),
-                          textStyle: TextStyle(color: Colors.white),
-                        ),
-                      ),
+                        }
+                      },
                     ),
                   ],
                 ),
